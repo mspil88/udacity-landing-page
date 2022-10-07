@@ -65,6 +65,17 @@ const navBar = document.querySelector("#navbar__list");
 
 //creating an unordered list or nav from the sections array nad think about how I can test whether a section is in the viewport
 
+const addSmoothScrolling = () => {
+    const navLinks = document.querySelectorAll(".nav__link");
+    navLinks.forEach(link=> {
+        link.addEventListener("click", (e)=> {
+            e.preventDefault();
+            const linkElem = document.getElementById(link.getAttribute("link-to"));
+            linkElem.scrollIntoView({behavior: "smooth"})
+        })
+    })
+}
+
 const createNav = () => {
 
     let listElements = [];
@@ -73,15 +84,22 @@ const createNav = () => {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.textContent = section.getAttribute("data-nav");
+        a.setAttribute("link-to", section.getAttribute("id"))
         a.className = "nav__link menu__link";
         a.href = `#${section.getAttribute("id")}`
+
+        // li.addEventListener("click", (event)=> {
+        //     event.preventDefault();
+        //     a.scrollIntoView(true);
+        // })
+        
         li.append(a);
         listElements.push(li)
         }
     )
 
     navBar.append(...listElements);
-    
+    addSmoothScrolling();
 }
 
 createNav();
@@ -90,10 +108,8 @@ const observer = new IntersectionObserver(
     entries => {
         entries.forEach(entry => {
             
-            // if(entry.isIntersecting) observer.unobserve(entry.target);
             if(entry.isIntersecting) {
                 console.log(entry.target)
-                // entry.target.className = "your-active-class";
                 entry.target.classList.toggle("your-active-class", entry.isIntersecting);
             }
             else {
@@ -109,4 +125,8 @@ const observer = new IntersectionObserver(
 sections.forEach(section => {
     observer.observe(section)
 })
+
+
+console.log("nav")
+Array.from(navBar).forEach(itm => console.log(itm))
 
