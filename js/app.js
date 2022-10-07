@@ -93,10 +93,11 @@ const observer = new IntersectionObserver(
             // if(entry.isIntersecting) observer.unobserve(entry.target);
             if(entry.isIntersecting) {
                 console.log(entry.target)
-                entry.target.className = "your-active-class";
+                // entry.target.className = "your-active-class";
+                entry.target.classList.toggle("your-active-class", entry.isIntersecting);
             }
             else {
-                entry.target.className = "inactive-section";
+                entry.target.classList.remove("your-active-class");
             }
     })
     },
