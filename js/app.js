@@ -59,4 +59,28 @@
 
 // Set sections as active
 
+const sections = Array.from(document.getElementsByTagName("section"));
+const navBar = document.querySelector("#navbar__list");
 
+
+//creating an unordered list or nav from the sections array nad think about how I can test whether a section is in the viewport
+
+const createNav = () => {
+
+    let listElements = [];
+    sections.forEach(section => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.textContent = section.getAttribute("data-nav");
+        a.className = "nav__link menu__link";
+        a.href = `#${section.getAttribute("id")}`
+        li.append(a);
+        listElements.push(li)
+        }
+    )
+
+    navBar.append(...listElements);
+    
+}
+
+createNav();
