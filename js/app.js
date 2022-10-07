@@ -68,6 +68,7 @@ const navBar = document.querySelector("#navbar__list");
 const createNav = () => {
 
     let listElements = [];
+
     sections.forEach(section => {
         const li = document.createElement("li");
         const a = document.createElement("a");
@@ -84,3 +85,27 @@ const createNav = () => {
 }
 
 createNav();
+
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            
+            // if(entry.isIntersecting) observer.unobserve(entry.target);
+            if(entry.isIntersecting) {
+                console.log(entry.target)
+                entry.target.className = "your-active-class";
+            }
+            else {
+                entry.target.className = "inactive-section";
+            }
+    })
+    },
+    {
+        threshold: 0.5,
+    }
+)
+
+sections.forEach(section => {
+    observer.observe(section)
+})
+
